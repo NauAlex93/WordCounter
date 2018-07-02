@@ -1,0 +1,2 @@
+mycounter.WordCounter
+mycounter.MyKey

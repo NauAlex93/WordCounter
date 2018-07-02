@@ -20,12 +20,10 @@ class MyKey implements Comparable<MyKey>{
 }
 public class WordCounter {
     private String inFile;
-    private String outFile;
     private static String testString = " fhfghgf  hello   o wtryh\n  hello o o ";
 
-    public WordCounter(String inFile, String outFile) {
+    public WordCounter(String inFile) {
         this.inFile = inFile;
-        this.outFile = outFile;
     }
 
     private Map words = new TreeMap();
