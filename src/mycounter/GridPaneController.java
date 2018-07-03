@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ import javafx.scene.control.TextField;
 public class GridPaneController implements Initializable {
     @FXML private TextField pathId;
     @FXML private ListView<String> listId;
+    @FXML private ProgressBar barId;
+    Map<String, Integer> wordsCount;
     
     private Task task=null;
     
@@ -36,6 +39,8 @@ public class GridPaneController implements Initializable {
                 listId.setItems(obj.getList());
             }
         });
+        
+       
     }    
     @FXML
     protected void btnFindClick(ActionEvent event) {
@@ -45,29 +50,17 @@ public class GridPaneController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("Please, choose txt file!");
         
-        WordCounter wc=new WordCounter(pathId.getText());
+        
+        
+        task = new WordCounter(pathId.getText(), MyCounterFX.items);
         if(!pathId.getText().endsWith(".txt")) alert.showAndWait();
-        wc.countWords();
+        //wc.countWords();
+        barId.progressProperty().bind(task.progressProperty());
+     
+        Thread thread=new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
         
-        Map tm = wc.getByValue();
-        for (Object obj : tm.keySet())
-        System.out.println(obj);
-        
-//        String path=pathId.getText();
-//        String end =endId.getText();
-//        
-//        MyCounterFX.items.clear();
-//        //barId.setProgress(-1);
-//        
-//        task = new FindTask(MyCounterFX.items, path, end);
-//        barId.progressProperty().bind(task.progressProperty());
-//        
-//        //run asynk Task in concurrent version
-//        Thread thread=new Thread(task);
-//        thread.setDaemon(true);
-//        thread.start();
-//
-//        //barId.setProgress(1);
     }
     @FXML
     protected void btnCancelClick(ActionEvent event) {

@@ -1,6 +1,8 @@
 package mycounter;
 import java.io.*;
 import java.util.*;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 
 class MyKey implements Comparable<MyKey>{
     String s;
@@ -18,15 +20,18 @@ class MyKey implements Comparable<MyKey>{
         return res;
     }
 }
-public class WordCounter {
+public class WordCounter extends Task<Void>{
     private String inFile;
-    private static String testString = " fhfghgf  hello   o wtryh\n  hello o o ";
+    final private int    SIZE=Integer.MAX_VALUE;
+    final private ObservableList<String> items;
+    final private List<String> list=new LinkedList<>();
 
-    public WordCounter(String inFile) {
+    public WordCounter(String inFile, ObservableList<String> items) {
         this.inFile = inFile;
+        this.items = items;
     }
 
-    private Map words = new TreeMap();
+    private Map<String, Integer> words = new TreeMap();
     public  Map getWords() { return words; }
     
     public Map getByValue () {
@@ -41,9 +46,7 @@ public class WordCounter {
         int num=0;
         try {
             Reader reader;
-            if ( inFile == null ) 
-                    reader = new StringReader(testString);
-            else    reader = new FileReader(inFile);
+            reader = new FileReader(inFile);
 
             BufferedReader br=new BufferedReader(reader);
             for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -63,9 +66,37 @@ public class WordCounter {
                         }
                 }
             }
+            Iterator iterator = words.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry<String, Integer> pair = (Map.Entry<String, Integer>) iterator.next();
+                list.add(pair.getKey()+" - "+pair.getValue()) ;
+            }
+            
             br.close(); 
-            System.out.println("num="+num);
         }
         catch (IOException ex) { ex.printStackTrace(); }
     }
+
+    @Override
+    protected Void call() throws Exception {
+        countWords();
+        return null;
+    }
+    
+    @Override
+    protected void cancelled() {
+        items.add("canceled by user....");
+	updateScene();
+    }
+
+    @Override
+    protected void succeeded() {
+        items.addAll(list);
+	items.add("finded "+items.size()+" unique words");
+	updateScene();
+    }
+    private void updateScene(){
+        updateProgress(SIZE, SIZE);
+    }
+    
 }

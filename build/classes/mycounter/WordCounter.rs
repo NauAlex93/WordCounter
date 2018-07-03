@@ -1,2 +1,0 @@
-mycounter.WordCounter
-mycounter.MyKey

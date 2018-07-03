@@ -4,7 +4,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Alexandr1/Documents/Java/SpecialistJava/Java1-02/MyCounter/src/mycounter/MyCounter.java</file>
+            <file>file:/C:/Users/Alexandr1/Documents/Java/SpecialistJava/Java1-02/MyCounter/src/mycounter/WordCounter.java</file>
+            <file>file:/C:/Users/Alexandr1/Documents/Java/SpecialistJava/Java1-02/MyCounter/src/mycounter/GridPane.fxml</file>
+            <file>file:/C:/Users/Alexandr1/Documents/Java/SpecialistJava/Java1-02/MyCounter/src/mycounter/MyCounterFX.java</file>
+            <file>file:/C:/Users/Alexandr1/Documents/Java/SpecialistJava/Java1-02/MyCounter/src/mycounter/GridPaneController.java</file>
         </group>
     </open-files>
 </project-private>
